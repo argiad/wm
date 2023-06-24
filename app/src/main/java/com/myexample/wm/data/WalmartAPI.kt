@@ -7,5 +7,5 @@ import retrofit2.http.GET
 interface WalmartAPI {
 
     @GET(Constants.FILE_PATH)
-    suspend fun getCounties(): List<CountryItem>
+    suspend fun getCountries(): List<CountryItem>
 }

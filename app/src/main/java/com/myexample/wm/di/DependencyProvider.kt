@@ -9,23 +9,34 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object DependencyProvider {
 
-    private val api: WalmartAPI by lazy {
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-        val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+interface DependencyProvider {
+    val api: WalmartAPI
+    val repo: WalmartRepo
 
-        Retrofit.Builder()
-            .client(client)
-            .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(WalmartAPI::class.java)
+    companion object {
+        val instance: DependencyProvider = DependencyProviderImpl
     }
 
+    object DependencyProviderImpl : DependencyProvider {
 
-    val repo: WalmartRepo by lazy {
-        WalmartRepoImpl(api)
+        override val api: WalmartAPI by lazy {
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+
+            Retrofit.Builder()
+                .client(client)
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(WalmartAPI::class.java)
+        }
+
+
+        override val repo: WalmartRepo by lazy {
+            WalmartRepoImpl(api)
+        }
+
     }
 }

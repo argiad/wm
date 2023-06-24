@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.flow
 import java.io.IOException
 
 class GetCountries constructor(
-    private val repository: WalmartRepo = DependencyProvider.repo
+    private val repository: WalmartRepo = DependencyProvider.instance.repo
 ) {
     operator fun invoke(): Flow<Resource<List<Country>>> = flow {
         try {

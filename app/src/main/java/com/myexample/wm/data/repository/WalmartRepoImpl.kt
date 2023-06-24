@@ -10,6 +10,6 @@ class WalmartRepoImpl constructor(
 ) : WalmartRepo {
 
     override suspend fun getCountries(): List<Country> {
-        return api.getCounties().map { it.toCountry() }
+        return api.getCountries().map { it.toCountry() }
     }
 }

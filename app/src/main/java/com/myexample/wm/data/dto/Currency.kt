@@ -10,5 +10,5 @@ data class Currency(
     @SerialName("name")
     val name: String,
     @SerialName("symbol")
-    val symbol: String
+    val symbol: String = "N/D"
 )
